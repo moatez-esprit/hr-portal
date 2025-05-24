@@ -1,0 +1,19 @@
+<!-- app.component.html -->
+<header>
+  <mat-toolbar color="primary">
+    <span>HR Portal</span>
+    <nav>
+      <a mat-button routerLink="/jobs">Job Offers</a>
+      <a mat-button routerLink="/jobs/new">Add New Job</a>
+    </nav>
+  </mat-toolbar>
+</header>
+
+<main class="container">
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  <p>© 2023 HR Portal. All rights reserved.</p>
+</footer>
+

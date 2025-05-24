@@ -1,0 +1,121 @@
+<div class="form-container">
+  <h2>{{ isEditMode ? 'Modifier l\'Offre d\'Emploi' : 'Créer une Nouvelle Offre d\'Emploi' }}</h2>
+
+  <form (ngSubmit)="onSubmit()" #jobForm="ngForm" class="job-form">
+    <!-- Job Title -->
+    <mat-form-field appearance="outline">
+      <mat-label>Titre du Poste</mat-label>
+      <input matInput [(ngModel)]="job.title" name="title" required>
+      <mat-error>Le titre du poste est requis</mat-error>
+    </mat-form-field>
+
+    <!-- Department -->
+    <mat-form-field appearance="outline">
+      <mat-label>Département</mat-label>
+      <mat-select [(ngModel)]="job.department" name="department" required>
+        <mat-option value="Engineering">Ingénierie</mat-option>
+        <mat-option value="Human Resources">Ressources Humaines</mat-option>
+        <mat-option value="Marketing">Marketing</mat-option>
+        <mat-option value="Sales">Ventes</mat-option>
+        <mat-option value="Finance">Finance</mat-option>
+        <mat-option value="Operations">Opérations</mat-option>
+      </mat-select>
+      <mat-error>Le département est requis</mat-error>
+    </mat-form-field>
+
+    <!-- Location -->
+    <mat-form-field appearance="outline">
+      <mat-label>Localisation</mat-label>
+      <input matInput [(ngModel)]="job.location" name="location" required>
+      <mat-error>La localisation est requise</mat-error>
+    </mat-form-field>
+
+    <!-- Salary Range -->
+    <mat-form-field appearance="outline">
+      <mat-label>Fourchette de Salaire</mat-label>
+      <input matInput [(ngModel)]="job.salaryRange" name="salaryRange" placeholder="Ex: 1400 - 2600">
+    </mat-form-field>
+
+    <!-- Status -->
+    <mat-form-field appearance="outline">
+      <mat-label>Statut</mat-label>
+      <mat-select [(ngModel)]="job.status" name="status" required>
+        <mat-option value="open">Ouvert</mat-option>
+        <mat-option value="closed">Fermé</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description du Poste</mat-label>
+      <textarea matInput [(ngModel)]="job.description" name="description" rows="6" required 
+                placeholder="Décrivez le poste, les responsabilités, et le profil recherché..."></textarea>
+      <mat-error>La description est requise</mat-error>
+    </mat-form-field>
+
+    <!-- Requirements -->
+    <div class="requirements-section">
+      <h4>Exigences du Poste</h4>
+      <div class="requirement-input">
+        <mat-form-field appearance="outline">
+          <mat-label>Ajouter une Exigence</mat-label>
+          <input matInput [(ngModel)]="requirementInput" name="requirementInput" 
+                 (keyup.enter)="addRequirement()" placeholder="Ex: 3+ années d'expérience">
+        </mat-form-field>
+        <button type="button" mat-raised-button color="primary" (click)="addRequirement()">
+          <mat-icon>add</mat-icon>
+          Ajouter
+        </button>
+      </div>
+      
+      <div class="requirements-list" *ngIf="job.requirements.length > 0">
+        <div class="chips-container">
+          <mat-chip *ngFor="let req of job.requirements; let i = index" 
+                    [removable]="true" 
+                    (removed)="removeRequirement(i)"
+                    class="requirement-chip">
+            {{ req }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Upload Section -->
+    <div class="file-upload-section">
+      <h4>Document Joint (PDF, DOC, DOCX)</h4>
+      <div class="upload-area" [class.has-file]="job.attachmentUrl">
+        <input type="file" #fileInput (change)="onFileSelected($event)" 
+               accept=".pdf,.doc,.docx" style="display: none;">
+        
+        <div class="upload-content" (click)="fileInput.click()">
+          <mat-icon class="upload-icon">cloud_upload</mat-icon>
+          <p *ngIf="!job.attachmentUrl">Cliquez pour sélectionner un fichier</p>
+          <p *ngIf="job.attachmentUrl" class="file-selected">
+            <mat-icon>description</mat-icon>
+            Fichier sélectionné
+          </p>
+        </div>
+        
+        <button type="button" mat-icon-button color="warn" *ngIf="job.attachmentUrl" 
+                (click)="removeAttachment()" class="remove-file">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      
+      <div class="upload-progress" *ngIf="uploadProgress > 0 && uploadProgress < 100">
+        <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
+        <span>Téléchargement... {{ uploadProgress }}%</span>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" mat-button routerLink="/jobs">Annuler</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!jobForm.form.valid || isLoading">
+        <mat-icon>save</mat-icon>
+        {{ isEditMode ? 'Mettre à Jour' : 'Créer l\'Offre' }}
+      </button>
+    </div>
+  </form>
+</div>
