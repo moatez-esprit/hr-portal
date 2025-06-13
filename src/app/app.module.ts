@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
 
 // Angular Material Modules
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -55,7 +57,8 @@ import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
     MatSnackBarModule,
     MatDialogModule,
     MatTooltipModule,
-    MatLegacyChipsModule
+    MatLegacyChipsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

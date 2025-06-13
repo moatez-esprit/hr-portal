@@ -133,17 +133,22 @@ export class JobFormComponent implements OnInit {
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      // Simulate file upload progress
       this.uploadProgress = 0;
-      const interval = setInterval(() => {
-        this.uploadProgress += 10;
-        if (this.uploadProgress >= 100) {
-          clearInterval(interval);
-          this.job.attachmentUrl = `uploads/${file.name}`;
+      this.jobService.uploadFile(this.job.id!, file).subscribe({
+        next: (response) => {
+          this.job.attachmentUrl = response;
+          this.uploadProgress = 100;
+          console.log('File uploaded:', response);
+        },
+        error: (error) => {
           this.uploadProgress = 0;
-          console.log('File uploaded:', file.name);
+          console.error('Error uploading file:', error);
+          this.snackBar.open('Erreur lors du téléchargement du fichier', 'Fermer', {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+          });
         }
-      }, 100);
+      });
     }
   }
 

@@ -51,11 +51,13 @@ export class JobListComponent implements OnInit, OnDestroy {
   }
 
   getOpenJobsCount(): number {
-    return this.jobService.getOpenJobsCount();
+    return this.jobs.filter(job => job.status === 'open').length;
   }
 
   getRecentJobsCount(): number {
-    return this.jobService.getRecentJobsCount();
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    return this.jobs.filter(job => new Date(job.postedDate) >= oneWeekAgo).length;
   }
 
   viewJob(job: Job): void {
