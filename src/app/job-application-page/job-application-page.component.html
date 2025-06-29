@@ -1,0 +1,21 @@
+<div class="job-application-page-container">
+  <h1>Postuler aux Offres d'Emploi</h1>
+  <div *ngIf="jobs.length === 0">
+    <p>Aucune offre d'emploi disponible pour le moment.</p>
+  </div>
+  <div *ngIf="jobs.length > 0" class="jobs-list">
+    <mat-card *ngFor="let job of jobs" class="job-card">
+      <mat-card-title>{{ job.title }}</mat-card-title>
+      <mat-card-subtitle>{{ job.department }}</mat-card-subtitle>
+      <mat-card-content>
+        <p>{{ job.description }}</p>
+        <p><strong>Localisation:</strong> {{ job.location }}</p>
+        <p><strong>Salaire:</strong> {{ job.salaryRange }}</p>
+        <p><strong>Statut:</strong> {{ job.status === 'open' ? 'Ouvert' : 'Fermé' }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="openApplicationDialog(job)">Postuler</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

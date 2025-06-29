@@ -52,6 +52,10 @@
                 placeholder="Décrivez le poste, les responsabilités, et le profil recherché..."></textarea>
       <mat-error>La description est requise</mat-error>
     </mat-form-field>
+    <button type="button" mat-raised-button color="accent" (click)="generateDescription()">
+      <mat-icon>auto_fix_high</mat-icon>
+      Générer la description automatiquement
+    </button>
 
     <!-- Requirements -->
     <div class="requirements-section">

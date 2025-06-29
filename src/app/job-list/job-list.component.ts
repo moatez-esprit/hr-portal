@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, takeUntil } from 'rxjs';
 import { Job } from '../models/job.model';
 import { JobService } from '../services/job.service';
+import { JobApplicationDialogComponent } from './job-application-dialog.component';
+
 
 @Component({
   selector: 'app-job-list',
@@ -14,6 +16,7 @@ import { JobService } from '../services/job.service';
 export class JobListComponent implements OnInit, OnDestroy {
   jobs: Job[] = [];
   displayedColumns: string[] = ['title', 'location', 'salary', 'status', 'postedDate', 'actions'];
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -104,6 +107,35 @@ export class JobListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  openApplicationDialog(job: Job): void {
+    const dialogRef = this.dialog.open(JobApplicationDialogComponent, {
+      width: '600px',
+      data: job,
+      autoFocus: false,
+      restoreFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackBar.open('Candidature envoyée avec succès!', 'Fermer', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+      }
+    });
+  }
+
+  // viewCVs(job: Job): void {
+  //   const dialogRef = this.dialog.open(JobCVsDialogComponent, {
+  //     width: '600px',
+  //     maxWidth: '90vw',
+  //     maxHeight: '90vh',
+  //     data: { jobId: job.id!, jobTitle: job.title },
+  //     autoFocus: false,
+  //     restoreFocus: false
+  //   });
+  // }
 }
 
 // Confirmation Dialog Component

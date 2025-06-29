@@ -42,4 +42,14 @@ export class JobService {
     formData.append('file', file);
     return this.http.post(`${this.apiUrl}/${id}/upload`, formData, { responseType: 'text' });
   }
+
+  // Submit job application with CV upload
+  submitApplication(formData: FormData) {
+    return this.http.post('http://localhost:8081/api/applications', formData);
+  }
+
+  // New method to get CVs by job ID
+  getCVsByJobId(jobId: string) {
+    return this.http.get<any[]>(`http://localhost:8081/api/applications/job/${jobId}`);
+  }
 }

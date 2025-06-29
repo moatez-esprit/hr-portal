@@ -41,6 +41,29 @@ export class JobFormComponent implements OnInit {
     }
   }
 
+  generateDescription(): void {
+    if (!this.job.title) {
+      this.snackBar.open('Veuillez saisir le titre du poste avant de générer la description.', 'Fermer', {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+      return;
+    }
+    let description = `Nous recherchons un(e) ${this.job.title}`;
+    if (this.job.requirements.length > 0) {
+      description += ' avec les exigences suivantes : ';
+      description += this.job.requirements.join(', ') + '.';
+    } else {
+      description += '.';
+    }
+    description += ' Le candidat idéal doit posséder les compétences et qualifications nécessaires pour réussir dans ce rôle.';
+    this.job.description = description;
+    this.snackBar.open('Description générée automatiquement.', 'Fermer', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
+  }
+
   loadJob(id: string): void {
     this.isLoading = true;
     this.jobService.getJobById(id).subscribe({
