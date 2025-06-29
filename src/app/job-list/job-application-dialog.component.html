@@ -41,15 +41,13 @@
 
     <!-- Contenu principal du formulaire -->
     <div class="form-content">
-      <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()" *ngIf="applicationForm">
-        
+      <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()">
         <!-- Section Informations personnelles -->
         <div class="form-section">
           <div class="section-header">
             <mat-icon class="section-icon">person_outline</mat-icon>
             <h2 class="section-title">Informations personnelles</h2>
           </div>
-          
           <div class="form-grid">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Nom complet *</mat-label>
@@ -90,7 +88,6 @@
             <mat-icon class="section-icon">description</mat-icon>
             <h2 class="section-title">Curriculum Vitae *</h2>
           </div>
-          
           <div class="upload-section">
             <div class="upload-area" 
                  [class.has-file]="selectedFile"
@@ -100,13 +97,11 @@
                  (dragleave)="onDragLeave($event)"
                  (drop)="onDrop($event)"
                  (click)="fileInput.click()">
-              
               <input #fileInput 
                      type="file" 
                      (change)="onFileSelected($event)" 
                      accept=".pdf,.doc,.docx" 
                      hidden>
-              
               <!-- État sans fichier -->
               <div class="upload-placeholder" *ngIf="!selectedFile">
                 <div class="upload-icon-container">
@@ -124,7 +119,6 @@
                   </div>
                 </div>
               </div>
-              
               <!-- Aperçu du fichier -->
               <div class="file-preview" *ngIf="selectedFile">
                 <div class="file-icon-container">
@@ -157,7 +151,6 @@
             <h2 class="section-title">Lettre de motivation</h2>
             <span class="optional-badge">Optionnel</span>
           </div>
-          
           <mat-form-field appearance="outline" class="form-field full-width">
             <mat-label>Pourquoi ce poste vous intéresse-t-il ?</mat-label>
             <textarea matInput 
@@ -170,34 +163,34 @@
             </mat-hint>
           </mat-form-field>
         </div>
-
-        <!-- Actions du formulaire -->
-        <div class="form-actions">
-          <button mat-stroked-button 
-                  type="button" 
-                  class="cancel-btn"
-                  (click)="onCancel()"
-                  [disabled]="isSubmitting">
-            <mat-icon>arrow_back</mat-icon>
-            Annuler
-          </button>
-          
-          <button mat-raised-button 
-                  color="primary" 
-                  type="submit" 
-                  class="submit-btn"
-                  [disabled]="applicationForm.invalid || !selectedFile || isSubmitting">
-            <span class="btn-content" *ngIf="!isSubmitting">
-              <mat-icon>send</mat-icon>
-              Envoyer ma candidature
-            </span>
-            <span class="btn-content loading" *ngIf="isSubmitting">
-              <mat-spinner diameter="20"></mat-spinner>
-              Envoi en cours...
-            </span>
-          </button>
-        </div>
       </form>
+            <!-- Actions always visible -->
+    <div class="form-actions">
+      <button mat-stroked-button 
+              type="button" 
+              class="cancel-btn"
+              (click)="onCancel()"
+              [disabled]="isSubmitting">
+        <mat-icon>arrow_back</mat-icon>
+        Annuler
+      </button>
+      <button mat-raised-button 
+              color="primary" 
+              type="button" 
+              class="submit-btn"
+              [disabled]="applicationForm.invalid || !selectedFile || isSubmitting"
+              (click)="submitApplication()">
+        <span class="btn-content" *ngIf="!isSubmitting">
+          <mat-icon>send</mat-icon>
+          Envoyer ma candidature
+        </span>
+        <span class="btn-content loading" *ngIf="isSubmitting">
+          <mat-spinner diameter="20"></mat-spinner>
+          Envoi en cours...
+        </span>
+      </button>
     </div>
+    </div>
+
   </div>
 </div>

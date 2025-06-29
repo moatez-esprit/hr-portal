@@ -37,7 +37,7 @@
 .application-dialog-container {
   width: 100%;
   max-width: 800px;
-  max-height: 90vh;
+  max-height: 105vh;
   background: var(--surface-color);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
@@ -607,6 +607,7 @@
 
 // Actions du formulaire
 .form-actions {
+  
   display: flex;
   gap: 16px;
   justify-content: flex-end;

@@ -60,6 +60,14 @@ export class JobApplicationDialogComponent {
       event.dataTransfer.clearData();
     }
   }
+  ngOnInit() {
+  this.applicationForm = this.fb.group({
+    applicantName: ['', [Validators.required, Validators.minLength(2)]],
+    applicantEmail: ['', [Validators.required, Validators.email]],
+    coverLetter: [''],
+    // ...other controls
+  });
+  }
 
 
   submitApplication(): void {
@@ -128,4 +136,5 @@ export class JobApplicationDialogComponent {
   onCancel(): void {
     this.dialogRef.close(false);
   }
+  
 }
