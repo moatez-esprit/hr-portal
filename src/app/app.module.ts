@@ -21,6 +21,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,8 +30,10 @@ import { JobFormComponent } from './job-form/job-form.component';
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import { JobApplicationPageComponent } from './job-application-page/job-application-page.component';
 import { JobApplicationDialogComponent } from './job-list/job-application-dialog.component';
+import { JobCVsDialogComponent } from './job-list/job-cvs-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatLegacyProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,8 +41,9 @@ import { MatLegacyProgressSpinnerModule } from '@angular/material/legacy-progres
     ConfirmDialogComponent,
     JobViewDialogComponent,
     JobFormComponent,
-    JobApplicationPageComponent, // <-- Add this
-    JobApplicationDialogComponent // <-- And this
+    JobApplicationPageComponent,
+    JobApplicationDialogComponent,
+    JobCVsDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +57,7 @@ import { MatLegacyProgressSpinnerModule } from '@angular/material/legacy-progres
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
+    MatListModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,

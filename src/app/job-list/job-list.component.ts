@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Job } from '../models/job.model';
 import { JobService } from '../services/job.service';
 import { JobApplicationDialogComponent } from './job-application-dialog.component';
+import { JobCVsDialogComponent } from './job-cvs-dialog.component';
 
 
 @Component({
@@ -73,7 +74,16 @@ export class JobListComponent implements OnInit, OnDestroy {
       restoreFocus: false
     });
   }
-
+  viewCVs(job: Job): void {
+    this.dialog.open(JobCVsDialogComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+      data: { jobId: job.id!, jobTitle: job.title },
+      autoFocus: false,
+      restoreFocus: false
+    });
+  }
   deleteJob(jobId: string): void {
     const jobToDelete = this.jobs.find(job => job.id === jobId);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -126,6 +136,7 @@ export class JobListComponent implements OnInit, OnDestroy {
     });
   }
 
+  
   // viewCVs(job: Job): void {
   //   const dialogRef = this.dialog.open(JobCVsDialogComponent, {
   //     width: '600px',

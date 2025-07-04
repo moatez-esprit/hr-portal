@@ -52,4 +52,8 @@ export class JobService {
   getCVsByJobId(jobId: string) {
     return this.http.get<any[]>(`http://localhost:8081/api/applications/job/${jobId}`);
   }
+
+downloadCV(cvId: number) {
+  return this.http.get(`/api/applications/${cvId}/cv`, { responseType: 'blob' });
+}
 }
