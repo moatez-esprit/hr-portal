@@ -1,0 +1,490 @@
+<div class="cv-builder-container">
+  <div class="cv-builder-header">
+    <h1 class="cv-builder-title">Professional CV Builder</h1>
+    <p class="cv-builder-subtitle">Create a compelling resume that stands out</p>
+  </div>
+
+  <div class="cv-builder-content">
+    <div class="cv-form-container">
+      <form [formGroup]="cvForm" (ngSubmit)="onSubmit()" class="cv-form">
+
+        <!-- Personal Information Section -->
+        <div class="form-section" formGroupName="personalInfo">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="section-icon">👤</span>
+              Personal Information
+            </h2>
+            <div class="section-progress">
+              <div class="progress-bar" [style.width.%]="getSectionProgress('personalInfo')"></div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field" [class.focused]="focusedField === 'fullName'">
+              <label class="field-label">Full Name *</label>
+              <div class="input-container">
+                <input 
+                  type="text"
+                  formControlName="fullName"
+                  class="field-input"
+                  placeholder="Enter your full name"
+                  (focus)="onFieldFocus('fullName')"
+                  (blur)="onFieldBlur()"
+                  (input)="onFieldInput('fullName', $event)"
+                />
+                <div class="field-status" [class.valid]="isFieldValid('personalInfo.fullName')">
+                  <span class="status-icon">{{ isFieldValid('personalInfo.fullName') ? '✓' : '!' }}</span>
+                </div>
+              </div>
+              <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'fullName'">
+                <div class="suggestion-content">
+                  <div class="suggestion-tip">{{ activeSuggestion.tip }}</div>
+                  <div class="suggestion-examples" *ngIf="activeSuggestion.examples && activeSuggestion.examples.length > 0">
+                    <span class="examples-label">Examples:</span>
+                    <div class="examples-list">
+                      <span 
+                        *ngFor="let example of activeSuggestion.examples" 
+                        class="example-item"
+                        (click)="applySuggestion('fullName', example)"
+                      >
+                        {{ example }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field" [class.focused]="focusedField === 'email'">
+              <label class="field-label">Email Address *</label>
+              <div class="input-container">
+                <input 
+                  type="email"
+                  formControlName="email"
+                  class="field-input"
+                  placeholder="your.email@example.com"
+                  (focus)="onFieldFocus('email')"
+                  (blur)="onFieldBlur()"
+                  (input)="onFieldInput('email', $event)"
+                />
+                <div class="field-status" [class.valid]="isFieldValid('personalInfo.email')">
+                  <span class="status-icon">{{ isFieldValid('personalInfo.email') ? '✓' : '!' }}</span>
+                </div>
+              </div>
+              <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'email'">
+                <div class="suggestion-content">
+                  <div class="suggestion-tip">{{ activeSuggestion?.tip }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field" [class.focused]="focusedField === 'phone'">
+              <label class="field-label">Phone Number *</label>
+              <div class="input-container">
+                <input 
+                  type="tel"
+                  formControlName="phone"
+                  class="field-input"
+                  placeholder="+1 (555) 123-4567"
+                  (focus)="onFieldFocus('phone')"
+                  (blur)="onFieldBlur()"
+                  (input)="onFieldInput('phone', $event)"
+                />
+                <div class="field-status" [class.valid]="isFieldValid('personalInfo.phone')">
+                  <span class="status-icon">{{ isFieldValid('personalInfo.phone') ? '✓' : '!' }}</span>
+                </div>
+              </div>
+              <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'phone'">
+                <div class="suggestion-content">
+                  <div class="suggestion-tip">{{ activeSuggestion?.tip }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field form-field-full" [class.focused]="focusedField === 'address'">
+              <label class="field-label">Address</label>
+              <div class="input-container">
+                <input 
+                  type="text"
+                  formControlName="address"
+                  class="field-input"
+                  placeholder="City, State, Country"
+                  (focus)="onFieldFocus('address')"
+                  (blur)="onFieldBlur()"
+                  (input)="onFieldInput('address', $event)"
+                />
+              </div>
+              <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'address'">
+                <div class="suggestion-content">
+                  <div class="suggestion-tip">{{ activeSuggestion?.tip }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Summary Section -->
+        <div class="form-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="section-icon">📝</span>
+              Professional Summary
+            </h2>
+          </div>
+
+          <div class="form-field" [class.focused]="focusedField === 'summary'">
+            <label class="field-label">Professional Summary</label>
+            <div class="textarea-container">
+              <textarea 
+                formControlName="summary"
+                class="field-textarea"
+                placeholder="Write a compelling professional summary..."
+                rows="4"
+                (focus)="onFieldFocus('summary')"
+                (blur)="onFieldBlur()"
+                (input)="onFieldInput('summary', $event)"
+              ></textarea>
+              <div class="character-count">
+                {{ getCharacterCount('summary') }}/300 characters
+              </div>
+            </div>
+            <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'summary'">
+              <div class="suggestion-content">
+                  <div class="suggestion-tip">{{ activeSuggestion.tip }}</div>
+                  <div class="suggestion-examples" *ngIf="activeSuggestion.examples && activeSuggestion.examples.length > 0">
+                  <span class="examples-label">Professional Examples:</span>
+                  <div class="examples-list vertical">
+                    <div 
+                      *ngFor="let example of activeSuggestion.examples" 
+                      class="example-item clickable"
+                      (click)="applySuggestion('summary', example)"
+                    >
+                      {{ example }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience Section -->
+        <div class="form-section" formArrayName="experience">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="section-icon">💼</span>
+              Work Experience
+            </h2>
+            <button type="button" class="add-button" (click)="addExperience()">
+              <span class="add-icon">+</span>
+              Add Experience
+            </button>
+          </div>
+
+          <div class="dynamic-entries">
+            <div 
+              *ngFor="let exp of experience.controls; let i = index" 
+              [formGroupName]="i" 
+              class="entry-card experience-entry"
+            >
+              <div class="entry-header">
+                <h3 class="entry-title">Experience {{ i + 1 }}</h3>
+                <button type="button" class="remove-button" (click)="removeExperience(i)">
+                  <span class="remove-icon">×</span>
+                </button>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-field" [class.focused]="focusedField === 'company-' + i">
+                  <label class="field-label">Company *</label>
+                  <div class="input-container">
+                    <input 
+                      type="text"
+                      formControlName="company"
+                      class="field-input"
+                      placeholder="Company name"
+                      (focus)="onFieldFocus('company-' + i)"
+                      (blur)="onFieldBlur()"
+                      (input)="onFieldInput('company', $event)"
+                    />
+                  </div>
+                  <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'company-' + i">
+                    <div class="suggestion-content">
+                      <div class="suggestion-tip">{{ activeSuggestion?.tip }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-field" [class.focused]="focusedField === 'position-' + i">
+                  <label class="field-label">Position *</label>
+                  <div class="input-container">
+                    <input 
+                      type="text"
+                      formControlName="position"
+                      class="field-input"
+                      placeholder="Job title"
+                      (focus)="onFieldFocus('position-' + i)"
+                      (blur)="onFieldBlur()"
+                      (input)="onFieldInput('position', $event)"
+                    />
+                  </div>
+                  <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'position-' + i">
+                    <div class="suggestion-content">
+                 <div class="suggestion-tip">{{ activeSuggestion.tip }}</div>
+                 <div class="suggestion-examples" *ngIf="activeSuggestion.examples && activeSuggestion.examples.length > 0">
+                        <span class="examples-label">Common Titles:</span>
+                        <div class="examples-list">
+                          <span 
+                            *ngFor="let example of activeSuggestion.examples" 
+                            class="example-item"
+                            (click)="applySuggestion('position', example)"
+                          >
+                            {{ example }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label">Start Date</label>
+                  <input type="date" formControlName="startDate" class="field-input" />
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label">End Date</label>
+                  <input type="date" formControlName="endDate" class="field-input" />
+                </div>
+
+                <div class="form-field form-field-full" [class.focused]="focusedField === 'description-' + i">
+                  <label class="field-label">Job Description</label>
+                  <div class="textarea-container">
+                    <textarea 
+                      formControlName="description"
+                      class="field-textarea"
+                      placeholder="Describe your key responsibilities and achievements..."
+                      rows="3"
+                      (focus)="onFieldFocus('description-' + i)"
+                      (blur)="onFieldBlur()"
+                      (input)="onFieldInput('description', $event)"
+                    ></textarea>
+                  </div>
+                  <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'description-' + i">
+                    <div class="suggestion-content">
+                       <div class="suggestion-tip">{{ activeSuggestion.tip }}</div>
+                       <div class="suggestion-examples" *ngIf="activeSuggestion.examples && activeSuggestion.examples.length > 0">
+                        <span class="examples-label">Power Phrases:</span>
+                        <div class="examples-list vertical">
+                          <div 
+                            *ngFor="let example of activeSuggestion.examples" 
+                            class="example-item clickable"
+                            (click)="appendToField('description', example)"
+                          >
+                            {{ example }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="experience.length === 0" class="empty-state">
+              <div class="empty-icon">💼</div>
+              <p class="empty-text">Add your work experience to showcase your professional journey</p>
+              <button type="button" class="add-button primary" (click)="addExperience()">
+                Add Your First Experience
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="form-section" formArrayName="education">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="section-icon">🎓</span>
+              Education
+            </h2>
+            <button type="button" class="add-button" (click)="addEducation()">
+              <span class="add-icon">+</span>
+              Add Education
+            </button>
+          </div>
+
+          <div class="dynamic-entries">
+            <div 
+              *ngFor="let edu of education.controls; let i = index" 
+              [formGroupName]="i" 
+              class="entry-card education-entry"
+            >
+              <div class="entry-header">
+                <h3 class="entry-title">Education {{ i + 1 }}</h3>
+                <button type="button" class="remove-button" (click)="removeEducation(i)">
+                  <span class="remove-icon">×</span>
+                </button>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-field" [class.focused]="focusedField === 'institution-' + i">
+                  <label class="field-label">Institution *</label>
+                  <div class="input-container">
+                    <input 
+                      type="text"
+                      formControlName="institution"
+                      class="field-input"
+                      placeholder="University or school name"
+                      (focus)="onFieldFocus('institution-' + i)"
+                      (blur)="onFieldBlur()"
+                    />
+                  </div>
+                  <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'institution-' + i">
+                    <div class="suggestion-content">
+                      <div class="suggestion-tip">{{ activeSuggestion?.tip }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-field" [class.focused]="focusedField === 'degree-' + i">
+                  <label class="field-label">Degree *</label>
+                  <div class="input-container">
+                    <input 
+                      type="text"
+                      formControlName="degree"
+                      class="field-input"
+                      placeholder="Degree and field of study"
+                      (focus)="onFieldFocus('degree-' + i)"
+                      (blur)="onFieldBlur()"
+                    />
+                  </div>
+                  <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'degree-' + i">
+                    <div class="suggestion-content">
+                       <div class="suggestion-tip">{{ activeSuggestion.tip }}</div>
+                       <div class="suggestion-examples" *ngIf="activeSuggestion.examples && activeSuggestion.examples.length > 0">
+                        <span class="examples-label">Examples:</span>
+                        <div class="examples-list">
+                          <span 
+                            *ngFor="let example of activeSuggestion.examples" 
+                            class="example-item"
+                            (click)="applySuggestion('degree', example)"
+                          >
+                            {{ example }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label">Start Date</label>
+                  <input type="date" formControlName="startDate" class="field-input" />
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label">End Date</label>
+                  <input type="date" formControlName="endDate" class="field-input" />
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="education.length === 0" class="empty-state">
+              <div class="empty-icon">🎓</div>
+              <p class="empty-text">Add your educational background</p>
+              <button type="button" class="add-button primary" (click)="addEducation()">
+                Add Education
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="form-section" formArrayName="skills">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="section-icon">⚡</span>
+              Skills
+            </h2>
+            <button type="button" class="add-button" (click)="addSkill()">
+              <span class="add-icon">+</span>
+              Add Skill
+            </button>
+          </div>
+
+          <div class="skills-container">
+            <div *ngFor="let skill of skills.controls; let i = index" class="skill-item">
+              <div class="skill-input-container" [class.focused]="focusedField === 'skill-' + i">
+                <input 
+                  [formControlName]="i"
+                  class="skill-input"
+                  placeholder="Enter a skill"
+                  (focus)="onFieldFocus('skill-' + i)"
+                  (blur)="onFieldBlur()"
+                  (input)="onFieldInput('skill', $event)"
+                />
+                <button type="button" class="skill-remove" (click)="removeSkill(i)">×</button>
+              </div>
+              <div class="suggestion-container" *ngIf="activeSuggestion && activeSuggestion.field === 'skill-' + i">
+                <div class="suggestion-content">
+                       <div class="suggestion-tip">{{ activeSuggestion.tip }}</div>
+                       <div class="suggestion-examples" *ngIf="activeSuggestion.examples && activeSuggestion.examples.length > 0">
+                    <span class="examples-label">Popular Skills:</span>
+                    <div class="examples-list">
+                      <span 
+                        *ngFor="let example of activeSuggestion.examples" 
+                        class="example-item"
+                        (click)="applySuggestion(i.toString(), example)"
+                      >
+                        {{ example }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="skills.length === 0" class="empty-state">
+              <div class="empty-icon">⚡</div>
+              <p class="empty-text">Showcase your key skills and competencies</p>
+              <button type="button" class="add-button primary" (click)="addSkill()">
+                Add Skills
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="resetForm()">
+            Reset Form
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="cvForm.invalid">
+            <span class="btn-icon">💾</span>
+            Save CV
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Live Preview Panel -->
+    <div class="cv-preview-panel">
+      <div class="preview-header">
+        <h3>Live Preview</h3>
+        <div class="preview-actions">
+          <button type="button" class="preview-btn" (click)="togglePreview()">
+            {{ showPreview ? 'Hide' : 'Show' }} Preview
+          </button>
+        </div>
+      </div>
+      <div class="preview-content" *ngIf="showPreview">
+        <div class="cv-preview">
+          <!-- Preview content would go here -->
+          <p class="preview-placeholder">CV preview will appear here as you fill out the form</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

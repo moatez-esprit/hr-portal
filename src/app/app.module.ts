@@ -33,6 +33,7 @@ import { JobApplicationDialogComponent } from './job-list/job-application-dialog
 import { JobCVsDialogComponent } from './job-list/job-cvs-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatLegacyProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import {CvBuilderModule} from "./cv-builder/cv-builder.module";
 
 @NgModule({
   declarations: [
@@ -71,7 +72,9 @@ import { MatLegacyProgressSpinnerModule } from '@angular/material/legacy-progres
     MatProgressSpinnerModule,
     MatLegacyProgressSpinnerModule,
     MatLegacyChipsModule,
-    HttpClientModule
+    HttpClientModule,
+    // CV Builder Module
+    CvBuilderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

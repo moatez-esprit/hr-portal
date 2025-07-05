@@ -1,0 +1,43 @@
+/* Basic styling for CV Builder form */
+.cv-form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.cv-form fieldset {
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.cv-form legend {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.cv-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.cv-form input,
+.cv-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  box-sizing: border-box;
+}
+
+.cv-form button {
+  margin-top: 0.5rem;
+}
+
+.education-entry,
+.experience-entry,
+.skill-entry {
+  margin-bottom: 1rem;
+}
